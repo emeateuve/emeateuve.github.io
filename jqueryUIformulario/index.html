@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="estilazo.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--TEMAS-->
+    <link rel="stylesheet" href="temas/oscuro/jquery-ui.structure.css">
+    <link rel="stylesheet" href="temas/oscuro/jquery-ui.theme.css">
+    <link rel="stylesheet" href="temas/verde/jquery-ui.structure.css">
+    <link rel="stylesheet" href="temas/verde/jquery-ui.theme.css">
+    <link rel="stylesheet" href="temas/amarillo/jquery-ui.structure.css">
+    <link rel="stylesheet" href="temas/amarillo/jquery-ui.theme.css">
+
+    <title>Formulario de reserva</title>
+</head>
+<style type="text/css"></style>
+<script>
+    $(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "slide",
+                duration: 500
+            },
+            hide: {
+                effect: "explode",
+                duration: 250
+            }
+        });
+
+        $("#opener").on("click", function () {
+            $("#dialog").dialog("open");
+        });
+    });
+    /* TEMAS */
+    $(function () {
+        $("#dialogoTemas").dialog({
+            autoOpen: false,
+            width: 300,
+            height: 200,
+            show: {
+                effect: "slide",
+                duration: 500
+            },
+            hide: {
+                effect: "explode",
+                duration: 250
+            }
+        });
+
+        $("#temas").on("click", function () {
+            $("#dialogoTemas").dialog("open");
+        });
+    });
+
+    function cambiarEstilo(nuevoEstilo) {
+        console.log('Tema cambiado')
+        var body = $('body');
+        body.removeClass("oscuro");
+        body.removeClass("verde");
+        body.removeClass("amarillo");
+        body.addClass(nuevoEstilo);
+    };
+    /* DATEPICKER */
+    $(function () {
+        $("#datepicker").datepicker({
+            numberOfMonths: 2,
+            showButtonPanel: true
+
+        });
+        $("#datepicker1").datepicker({
+            numberOfMonths: 2,
+            showButtonPanel: true
+
+        });
+        $("#datepicker").datepicker("setDate", new Date());
+        $("#datepicker1").datepicker("setDate", new Date());
+    });
+    $(function ($) {
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '< Ant',
+            nextText: 'Sig >',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+
+
+        $(".furgoneta").selectmenu();
+
+        $("#accordion").accordion({
+            heightStyle: "content",
+            collapsible: true
+        });
+        $(document).tooltip({
+            track: true,
+            show: {
+                effect: "slideDown",
+                delay: 250
+            },
+            hide: {
+                effect: "drop",
+                delay: 0,
+                duration: 100
+            }
+        });
+    });
+
+    $(function () {
+        $("#tabs").tabs();
+    });
+
+    $(function () {
+        $(".controlgroup").controlgroup()
+    });
+
+    /* EFECTOS */
+
+    $(function () {
+        $("#efecto1").on("click", function () {
+            $(".primeraEfecto1").switchClass("primeraEfecto1", "segundaEfecto1", 1000);
+            $(".segundaEfecto1").switchClass("segundaEfecto1", "primeraEfecto1", 1000);
+        });
+    });
+    $(function () {
+        var state = true;
+        $("#efecto2").on("click", function () {
+            if (state) {
+                $("#afectada").animate({
+                    backgroundColor: "#aa0000",
+                    color: "#fff",
+                    width: 500
+                }, 1500);
+            } else {
+                $("#afectada").animate({
+                    backgroundColor: "#fff",
+                    color: "#000",
+                    width: 240
+                }, 500);
+            }
+            state = !state;
+        });
+    });
+
+    function callback() {
+        setTimeout(function() {
+            $( "#afectada" ).removeAttr( "style" ).hide().fadeIn();
+        }, 500 );
+    };
+
+</script>
+<script>
+    /* AUTOCOMPLETE */
+    $(function () {
+        var getData = function (request, response) {
+            $.getJSON(
+                "http://gd.geobytes.com/AutoCompleteCity?callback=?&q=" + request.term,
+                function (data) {
+                    response(data);
+                });
+        };
+        var selectItem = function (event, ui) {
+            $("#inputCity").val(ui.item.value);
+            return false;
+        }
+        $("#inputCity").autocomplete({
+            source: getData,
+            select: selectItem,
+            minLength: 4,
+            change: function () {
+                $("#inputCity").val("").css("display", 2);
+            }
+        });
+    });
+</script>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-12">
+            <nav class="navbar navbar-light bg-light">
+                <span class="navbar-brand mb-0 h1">Navbar</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="col-lg-10 col-sm-10 col-md-10 col-10 formulario">
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Datos de cliente</a></li>
+            <li><a href="#tabs-2">Datos del producto</a></li>
+            <li><a href="#tabs-3">Fecha</a></li>
+            <li><a href="#tabs-4">Estilazos</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-12 text-center mt-2">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6" title="Tu nombre. ¿Qué otra cosa esperas poner aquí?">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" placeholder="Nombre...">
+                        </div>
+                        <div class="form-group col-md-6" title="Tus apellidos, porfavor">
+                            <label for="inputApellidos">Apellidos</label>
+                            <input type="text" class="form-control" id="inputApellidos"
+                                   placeholder="Apellidos...">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6"
+                             title="Dirección de correo electrónico. Ejemplo: emeateuve@gmail.com">
+                            <label for="inputEmail4">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-6" title="Nombre de tu ciudad. El autocompletar te ayudará.">
+                            <label for="inputCity">Ciudad</label>
+                            <input type="text" class="form-control" id="inputCity">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12" title="Dirección. Ejemplo: Sin nombre nº X">
+                            <label for="inputCity">Dirección</label>
+                            <label class="sr-only" for="inlineFormInputGroup">Dirección</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">C/</div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroup"
+                                       placeholder="Avenida X bloque Y nº Z">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div class="widget">
+                <fieldset>
+                    <div class="form-row">
+                        <div class="controlgroup col-md-6">
+                            <div id="accordion">
+                                <h3 title="Elige una furgoneta de las listadas">Furgoneta</h3>
+                                <div class="selectorFurgoneta">
+                                    <select id="car-type">
+                                        <option disabled selected>Elige una furgoneta...</option>
+                                        <option>Renault Transit</option>
+                                        <option>Citroen Berlingo</option>
+                                        <option>Fiat Ducato</option>
+                                        <option>For Courier</option>
+                                        <option>Hyundai H1</option>
+                                        <option>Kia Besta</option>
+                                        <option>Mercedes Vito</option>
+                                        <option>Mitsubishi L300</option>
+                                        <option>Nissan Cabstar E</option>
+                                    </select>
+                                </div>
+                                <h3 title="Selecciona el tipo de transmisión para tu fabulosa furgoneta; manual o automática.">
+                                    Transmisión</h3>
+                                <div class="selectorTransmision">
+                                    <label for="transmission-standard">Manual</label>
+                                    <input type="radio" name="transmission" id="transmission-standard">
+                                    <label for="transmission-automatic">Automático</label>
+                                    <input type="radio" name="transmission" id="transmission-automatic">
+                                </div>
+                                <h3 title="Número de plazas que deseas que tenga tu furgoneta">Plazas</h3>
+                                <div class="selectorPlazas">
+                                    <select id="car-plazas">
+                                        <option selected disabled>Número de plazas...</option>
+                                        <option>5 plazas</option>
+                                        <option>7 plazas</option>
+                                        <option>+7 plazas</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="controlgroup col-md-6 text-left">
+                            <fieldset>
+                                <h3>Extras</h3>
+                                <label for="insurance-v1">Aire acondicionado</label>
+                                <input type="checkbox" name="aireAcondicionado" id="insurance-v1">
+                                <label for="insurance-v2">Asistencia de freno</label>
+                                <input type="checkbox" name="insurance" id="insurance-v2">
+                                <label for="insurance-v3">Asientos tapizados</label>
+                                <input type="checkbox" name="insurance" id="insurance-v3">
+                                <label for="insurance-v4">Rueda de recambio</label>
+                                <input type="checkbox" name="insurance" id="insurance-v4">
+                                <label for="insurance-v5">Extintor</label>
+                                <input type="checkbox" name="insurance" id="insurance-v5">
+                                <label for="insurance-v6">Disco del Canelita</label>
+                                <input type="checkbox" name="insurance" id="insurance-v6">
+                            </fieldset>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div id="tabs-3">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <fieldset>
+                        <h3>Fecha de alquiler</h3>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <label for="datepicker">Desde...</label>
+                                <input type="text" class="form-control" id="datepicker" title="Fecha de inicio">
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <label for="datepicker">Hasta...</label>
+                                <input type="text" class="form-control" id="datepicker1" title="Fecha de fin">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <button id="opener" style="width: 100%;" type="submit" class="btn btn-primary">Enviar</button>
+                    <div id="dialog" title="¡Formulario enviado!">
+                        <p>Formulario enviado con éxito</p>
+                        <button style="width: 100%" class="btn btn-secondary" onclick="window.location.reload()">De
+                            acuerdo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-4">
+            <button id="temas" class="btn btn-primary w-100">Abrir Temas</button>
+            <div id="dialogoTemas" title="Selecciona un tema colegui">
+                <div class="row">
+                    <div class="col-md-12 col-12 mt-1 w-100">
+                        <button id="oscuro" class="btn btn-secondary w-100" onclick="cambiarEstilo('oscuro')">Tema
+                            Oscuro
+                        </button>
+                    </div>
+                    <br>
+                    <div class="col-md-12 col-12 mt-1 w-100">
+                        <button id="verde" class="btn btn-success w-100" onclick="cambiarEstilo('verde')">Tema Verde
+                        </button>
+                    </div>
+                    <br>
+                    <div class="col-md-12 col-12 mt-1 w-100">
+                        <button id="amarillo" class="btn btn-warning w-100" onclick="cambiarEstilo('amarillo')">Tema
+                            Amarillo
+                        </button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="primeraEfecto1 col-md-12" id="afectada">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. In iure labore laborum libero numquam
+                    </div>
+
+                    <button id="efecto1" class="btn btn-primary w-33 ml-1 text-center" title="Cambia las clases">Efecto 1</button>
+                    <button id="efecto2" class="btn btn-primary w-33 ml-1 text-center" title="Cambia el background de color y el tamaño">Efecto 2</button>
+                    <button id="efecto3" class="btn btn-primary w-33 ml-1 text-center" title="Oculta el cuadro" onclick="callback()">Efecto 3</button>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

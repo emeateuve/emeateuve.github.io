@@ -1,0 +1,45 @@
+body{
+    margin:0px;
+    padding: 0px;
+}
+
+.formulario{
+    width: 100%;
+    margin:auto;
+    height: auto;
+}
+.ui-button{
+    width:45%;
+}
+.ui-controlgroup-vertical {
+    width: 150px;
+}
+.ui-controlgroup.ui-controlgroup-vertical > button.ui-button,
+.ui-controlgroup.ui-controlgroup-vertical > .ui-controlgroup-label {
+    text-align: center;
+}
+#car-type-button {
+    width: 100%;
+}
+.ui-controlgroup-horizontal .ui-spinner-input {
+    width: 20px;
+}
+.ui-selectmenu-button.ui-button {
+    width:100% !important;
+}
+#car-type, #car-plazas{
+    width: 100% !important;
+}
+.selectorFurgoneta, .selectorPlazas, .selectorTransmision{
+    overflow: hidden !important;
+    width:100%;
+
+}
+
+.primeraEfecto1{
+    font-size: 12px;
+}
+
+.segundaEfecto1{
+    font-size:24px;
+}
